@@ -22,10 +22,7 @@ void LFO::prepareToPlay(double sampleRate, int samplesPerBlock) {
     currentOscillator = &lfoSine;
 }
 
-void LFO::process(juce::AudioBuffer<float> &buffer,
-                  juce::AudioParameterChoice *pChoice) {
-
-    Waveform waveform = static_cast<LFO::Waveform>(pChoice->getIndex());
+void LFO::process(juce::AudioBuffer<float> &buffer, Waveform waveform) {
     switch (waveform)
     {
         case LFO::Sine:
@@ -53,7 +50,7 @@ void LFO::process(juce::AudioBuffer<float> &buffer,
     }
 }
 
-void LFO::updateParameters(float freq) {
+void LFO::setFrequency(float freq) {
     currentOscillator->setFrequency(freq);
 }
 

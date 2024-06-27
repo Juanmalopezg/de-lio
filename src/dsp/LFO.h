@@ -16,13 +16,13 @@ public:
 
     void prepareToPlay(double sampleRate, int samplesPerBlock);
 
-    void updateParameters(float freq);
-
-    void process(juce::AudioBuffer<float> &buffer,juce::AudioParameterChoice *pChoice);
+    void setFrequency(float freq);
 
     void setActive(bool active);
 
     bool isActive() const;
+
+    void process(juce::AudioBuffer<float> &buffer, Waveform waveform);
 
 private:
     bool isLFOActive = false;
