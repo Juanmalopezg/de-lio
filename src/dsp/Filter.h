@@ -1,3 +1,6 @@
+#ifndef FILTER_H
+#define FILTER_H
+
 #include <juce_dsp/juce_dsp.h>
 
 
@@ -25,3 +28,5 @@ private:
 
     bool isFilterActive = false;
 };
+
+#endif // FILTER_H

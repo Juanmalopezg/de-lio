@@ -1,3 +1,6 @@
+#ifndef LFO_H
+#define LFO_H
+
 #include <juce_dsp/juce_dsp.h>
 #include <juce_audio_processors/juce_audio_processors.h>
 
@@ -39,3 +42,5 @@ private:
     static float triangleWave(float x);
 
 };
+
+#endif // LFO_H
