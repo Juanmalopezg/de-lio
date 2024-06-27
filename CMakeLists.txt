@@ -43,6 +43,8 @@ set(SourceFiles
         src/dsp/Filter.cpp
         src/dsp/LFO.h
         src/dsp/LFO.cpp
+        src/dsp/Tremolo.h
+        src/dsp/Tremolo.cpp
         src/gui/KnobLookAndFeel.h
         src/gui/KnobLookAndFeel.cpp
 )

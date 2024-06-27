@@ -5,7 +5,7 @@
 #include "dsp/Volume.h"
 #include "dsp/Panning.h"
 #include "dsp/Filter.h"
-#include "dsp/LFO.h"
+#include "dsp/Tremolo.h"
 
 //==============================================================================
 class AudioPluginAudioProcessor : public juce::AudioProcessor {
@@ -66,7 +66,7 @@ private:
 
     void updateParameters();
 
-    LFO lfo;
+    Tremolo tremolo;
 
     Filter lowPassFilter;
     Filter bandPassFilter;

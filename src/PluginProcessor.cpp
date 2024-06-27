@@ -25,9 +25,9 @@ AudioPluginAudioProcessor::createParameters() {
 
     // LFO parameters
     parameters.add(std::make_unique<juce::AudioParameterBool>(
-            juce::ParameterID{"LFO", 1}, "LFO On/Off", false));
-    parameters.add(std::make_unique<juce::AudioParameterInt>(
-            juce::ParameterID{"LFOFreq", 1}, "LFOFreq", 0, 2000, 440));
+            juce::ParameterID{"Tremolo", 1}, "Tremolo On/Off", false));
+    parameters.add(std::make_unique<juce::AudioParameterFloat>(
+            juce::ParameterID{"TremoloFreq", 1}, "TremoloFreq", 0.0f, 12.0f, 2.0f));
     parameters.add(std::make_unique<juce::AudioParameterChoice>(
             juce::ParameterID{"Waveform", 1}, "Waveform",
             juce::StringArray("Sine", "Square", "Saw", "Triangle"), 1));
@@ -54,9 +54,9 @@ AudioPluginAudioProcessor::createParameters() {
 }
 
 void AudioPluginAudioProcessor::updateParameters() {
-    float frequency = *state.getRawParameterValue("LFOFreq");
-    lfo.setActive(static_cast<bool>(*state.getRawParameterValue("LFO")));
-    lfo.updateParameters(frequency);
+    float frequency = *state.getRawParameterValue("TremoloFreq");
+    tremolo.setActive(static_cast<bool>(*state.getRawParameterValue("Tremolo")));
+    tremolo.setValue(frequency);
 
     lowPassFilter.setActive(
             static_cast<bool>(*state.getRawParameterValue("LowPass")));
@@ -136,7 +136,7 @@ void AudioPluginAudioProcessor::prepareToPlay(double sampleRate,
     spec.maximumBlockSize = samplesPerBlock;
     spec.numChannels = getTotalNumOutputChannels();
 
-    lfo.prepareToPlay(sampleRate, samplesPerBlock);
+    tremolo.prepare(sampleRate, samplesPerBlock);
     lowPassFilter.prepare(spec);
     bandPassFilter.prepare(spec);
     highPassFilter.prepare(spec);
@@ -177,11 +177,9 @@ void AudioPluginAudioProcessor::processBlock(juce::AudioBuffer<float> &buffer,
 
     updateParameters();
 
-    if (lfo.isActive())
+    if (tremolo.isActive())
     {
-        auto *waveform = dynamic_cast<juce::AudioParameterChoice *>(state.getParameter(
-                "Waveform"));
-        lfo.process(buffer, waveform);
+        tremolo.process(buffer);
     }
 
     if (lowPassFilter.isActive())

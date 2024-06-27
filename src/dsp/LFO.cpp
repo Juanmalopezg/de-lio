@@ -45,7 +45,7 @@ void LFO::process(juce::AudioBuffer<float> &buffer, Waveform waveform) {
         for (int i = 0; i < buffer.getNumSamples(); ++i)
         {
             auto sample = currentOscillator->processSample(0);
-            channelData[i] += sample;
+            channelData[i] *= sample;
         }
     }
 }

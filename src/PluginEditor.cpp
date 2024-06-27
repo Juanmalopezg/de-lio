@@ -102,21 +102,21 @@ void AudioPluginAudioProcessorEditor::prepareFilters() {
 }
 
 void AudioPluginAudioProcessorEditor::prepareLFO() {
-    lfoOnOffButton.setButtonText("LFO");
+    lfoOnOffButton.setButtonText("Tremolo");
     lfoOnOffButton.setClickingTogglesState(true);
 
     addAndMakeVisible(lfoOnOffButton);
     lfoOnOffButtonAttachment = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(
-            audioProcessor.state, "LFO", lfoOnOffButton);
+            audioProcessor.state, "Tremolo", lfoOnOffButton);
 
 
     lfoFreqSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
     lfoFreqSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 100, 20);
-    lfoFreqSlider.setValue(440.0f);
+    lfoFreqSlider.setValue(2.0f);
     addAndMakeVisible(lfoFreqSlider);
     lfoFreqSlider.addListener(this);
     lfoFrequencyAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
-            audioProcessor.state, "LFOFreq", lfoFreqSlider);
+            audioProcessor.state, "TremoloFreq", lfoFreqSlider);
 }
 
 void AudioPluginAudioProcessorEditor::sliderValueChanged(juce::Slider *s) {
