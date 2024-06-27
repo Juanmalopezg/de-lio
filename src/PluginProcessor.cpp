@@ -23,11 +23,14 @@ juce::AudioProcessorValueTreeState::ParameterLayout
 AudioPluginAudioProcessor::createParameters() {
     juce::AudioProcessorValueTreeState::ParameterLayout parameters;
 
-    // LFO parameters
+    // Tremolo parameters
     parameters.add(std::make_unique<juce::AudioParameterBool>(
             juce::ParameterID{"Tremolo", 1}, "Tremolo On/Off", false));
     parameters.add(std::make_unique<juce::AudioParameterFloat>(
-            juce::ParameterID{"TremoloFreq", 1}, "TremoloFreq", 0.0f, 12.0f, 2.0f));
+            juce::ParameterID{"TremoloFreq", 1}, "TremoloFreq", 0.0f, 12.0f,
+            2.0f));
+
+    // Oscillator parameters
     parameters.add(std::make_unique<juce::AudioParameterChoice>(
             juce::ParameterID{"Waveform", 1}, "Waveform",
             juce::StringArray("Sine", "Square", "Saw", "Triangle"), 1));
@@ -44,7 +47,7 @@ AudioPluginAudioProcessor::createParameters() {
 
     // General parameters
     parameters.add(std::make_unique<juce::AudioParameterFloat>(
-            juce::ParameterID{"Volume", 1}, "Volume", 0.0f, 0.2f, 0.01f));
+            juce::ParameterID{"Volume", 1}, "Volume", 0.0f, 1.0f, 0.5f));
     parameters.add(std::make_unique<juce::AudioParameterFloat>(
             juce::ParameterID{"Panning", 1}, "Panning", 0.0f,
             juce::MathConstants<float>::pi / 2.0f,
@@ -55,15 +58,14 @@ AudioPluginAudioProcessor::createParameters() {
 
 void AudioPluginAudioProcessor::updateParameters() {
     float frequency = *state.getRawParameterValue("TremoloFreq");
-    tremolo.setActive(static_cast<bool>(*state.getRawParameterValue("Tremolo")));
-    tremolo.setValue(frequency);
+    tremolo.setActive(
+            static_cast<bool>(*state.getRawParameterValue("Tremolo")));
+    tremolo.update(frequency);
 
-    lowPassFilter.setActive(
-            static_cast<bool>(*state.getRawParameterValue("LowPass")));
-    bandPassFilter.setActive(
-            static_cast<bool>(*state.getRawParameterValue("PassBand")));
-    highPassFilter.setActive(
-            static_cast<bool>(*state.getRawParameterValue("HighPass")));
+//    bandPassFilter.setActive(
+//            static_cast<bool>(*state.getRawParameterValue("PassBand")));
+//    highPassFilter.setActive(
+//            static_cast<bool>(*state.getRawParameterValue("HighPass")));
 
     float v = *state.getRawParameterValue("Volume");
     float p = *state.getRawParameterValue("Panning");
@@ -136,10 +138,9 @@ void AudioPluginAudioProcessor::prepareToPlay(double sampleRate,
     spec.maximumBlockSize = samplesPerBlock;
     spec.numChannels = getTotalNumOutputChannels();
 
-    tremolo.prepare(sampleRate, samplesPerBlock);
-    lowPassFilter.prepare(spec);
-    bandPassFilter.prepare(spec);
-    highPassFilter.prepare(spec);
+    tremolo.prepare(sampleRate, samplesPerBlock, spec);
+//    bandPassFilter.prepare(spec);
+//    highPassFilter.prepare(spec);
 }
 
 void AudioPluginAudioProcessor::releaseResources() {
@@ -182,20 +183,20 @@ void AudioPluginAudioProcessor::processBlock(juce::AudioBuffer<float> &buffer,
         tremolo.process(buffer);
     }
 
-    if (lowPassFilter.isActive())
-    {
-        lowPassFilter.processLowPass(buffer);
-    }
-
-    if (bandPassFilter.isActive())
-    {
-        bandPassFilter.processBandPass(buffer);
-    }
-
-    if (highPassFilter.isActive())
-    {
-        highPassFilter.processHighPass(buffer);
-    }
+//    if (lowPassFilter.isActive())
+//    {
+//        lowPassFilter.processLowPass(buffer);
+//    }
+//
+//    if (bandPassFilter.isActive())
+//    {
+//        bandPassFilter.processBandPass(buffer);
+//    }
+//
+//    if (highPassFilter.isActive())
+//    {
+//        highPassFilter.processHighPass(buffer);
+//    }
 
     volume.process(buffer);
     panning.process(buffer);

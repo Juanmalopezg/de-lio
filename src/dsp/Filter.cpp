@@ -12,20 +12,20 @@ void Filter::prepare(juce::dsp::ProcessSpec &spec) {
 
     lowPassFilter.prepare(spec);
     lowPassFilter.setType(juce::dsp::StateVariableTPTFilterType::lowpass);
-    lowPassFilter.setCutoffFrequency(500.0f);
+    lowPassFilter.setCutoffFrequency(20000.0f);
 }
 
-void Filter::processHighPass(juce::AudioBuffer<float> &buffer) {
-    auto audioBlock = juce::dsp::AudioBlock<float>(buffer);
-    auto context = juce::dsp::ProcessContextReplacing<float>(audioBlock);
-    highpassFilter.process(context);
-}
-
-void Filter::processBandPass(juce::AudioBuffer<float> &buffer) {
-    auto audioBlock = juce::dsp::AudioBlock<float>(buffer);
-    auto context = juce::dsp::ProcessContextReplacing<float>(audioBlock);
-    bandPassFilter.process(context);
-}
+//void Filter::processHighPass(juce::AudioBuffer<float> &buffer) {
+//    auto audioBlock = juce::dsp::AudioBlock<float>(buffer);
+//    auto context = juce::dsp::ProcessContextReplacing<float>(audioBlock);
+//    highpassFilter.process(context);
+//}
+//
+//void Filter::processBandPass(juce::AudioBuffer<float> &buffer) {
+//    auto audioBlock = juce::dsp::AudioBlock<float>(buffer);
+//    auto context = juce::dsp::ProcessContextReplacing<float>(audioBlock);
+//    bandPassFilter.process(context);
+//}
 
 void Filter::processLowPass(juce::AudioBuffer<float> &buffer) {
     auto audioBlock = juce::dsp::AudioBlock<float>(buffer);
@@ -33,10 +33,10 @@ void Filter::processLowPass(juce::AudioBuffer<float> &buffer) {
     lowPassFilter.process(context);
 }
 
-void Filter::setActive(bool active) {
-    isFilterActive = active;
-}
-
-bool Filter::isActive() const {
-    return isFilterActive;
-}
+//void Filter::setActive(bool active) {
+//    isFilterActive = active;
+//}
+//
+//bool Filter::isActive() const {
+//    return isFilterActive;
+//}

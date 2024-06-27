@@ -11,6 +11,7 @@ public:
     };
 
     juce::dsp::Oscillator<float> lfoSine, lfoSquare, lfoSaw, lfoTriangle;
+
     juce::dsp::Gain<float> gain;
     juce::dsp::Oscillator<float> *currentOscillator;
 
@@ -23,6 +24,8 @@ public:
     bool isActive() const;
 
     void process(juce::AudioBuffer<float> &buffer, Waveform waveform);
+
+    juce::dsp::Oscillator<float> &getLfoSine();
 
 private:
     bool isLFOActive = false;

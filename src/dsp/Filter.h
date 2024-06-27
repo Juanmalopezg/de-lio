@@ -6,15 +6,15 @@ public:
 
     void prepare(juce::dsp::ProcessSpec &inSpec);
 
-    void setActive(bool active);
+//    void setActive(bool active);
 
-    bool isActive() const;
+//    bool isActive() const;
 
     void processLowPass(juce::AudioBuffer<float> &buffer);
 
-    void processBandPass(juce::AudioBuffer<float> &buffer);
-
-    void processHighPass(juce::AudioBuffer<float> &buffer);
+//    void processBandPass(juce::AudioBuffer<float> &buffer);
+//
+//    void processHighPass(juce::AudioBuffer<float> &buffer);
 
 private:
     juce::dsp::ProcessorDuplicator<juce::dsp::IIR::Filter<float>, juce::dsp::IIR::Coefficients<float>> bandPassFilter;
