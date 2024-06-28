@@ -45,6 +45,8 @@ set(SourceFiles
         src/dsp/LFO.cpp
         src/dsp/Tremolo.h
         src/dsp/Tremolo.cpp
+        src/dsp/Reverb.h
+        src/dsp/Reverb.cpp
         src/gui/KnobLookAndFeel.h
         src/gui/KnobLookAndFeel.cpp
 )
@@ -57,8 +59,11 @@ target_compile_definitions("${PROJECT_NAME}"
         JUCE_USE_CURL=0     # If you remove this, add `NEEDS_CURL TRUE` to the `juce_add_plugin` call
         JUCE_VST3_CAN_REPLACE_VST2=0)
 
+juce_add_binary_data("${PROJECT_NAME}Data" SOURCES ${CMAKE_CURRENT_SOURCE_DIR}\\assets\\IR.wav)
+
 target_link_libraries("${PROJECT_NAME}"
         PRIVATE
+        "${PROJECT_NAME}Data"
         PUBLIC
         juce::juce_audio_utils
         juce::juce_audio_processors

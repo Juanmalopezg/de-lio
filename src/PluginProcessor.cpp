@@ -27,8 +27,15 @@ AudioPluginAudioProcessor::createParameters() {
     parameters.add(std::make_unique<juce::AudioParameterBool>(
             juce::ParameterID{"Tremolo", 1}, "Tremolo On/Off", false));
     parameters.add(std::make_unique<juce::AudioParameterFloat>(
-            juce::ParameterID{"TremoloFreq", 1}, "TremoloFreq", 0.0f, 12.0f,
+            juce::ParameterID{"TremoloFreq", 1}, "Tremolo Freq", 0.0f, 12.0f,
             2.0f));
+
+    // Reverb parameters
+    parameters.add(std::make_unique<juce::AudioParameterBool>(
+            juce::ParameterID{"Reverb", 1}, "Reverb On/Off", false));
+    parameters.add(std::make_unique<juce::AudioParameterFloat>(
+            juce::ParameterID{"ReverbRate", 1}, "Reverb Rate", 0.1f, 500.0f,
+            5.0f));
 
     // Oscillator parameters
     parameters.add(std::make_unique<juce::AudioParameterChoice>(
@@ -61,6 +68,11 @@ void AudioPluginAudioProcessor::updateParameters() {
     tremolo.setActive(
             static_cast<bool>(*state.getRawParameterValue("Tremolo")));
     tremolo.update(frequency);
+
+    float rate = *state.getRawParameterValue("ReverbRate");
+    reverb.setActive(
+            static_cast<bool>(*state.getRawParameterValue("Reverb")));
+    reverb.update(rate);
 
 //    bandPassFilter.setActive(
 //            static_cast<bool>(*state.getRawParameterValue("PassBand")));
@@ -139,6 +151,7 @@ void AudioPluginAudioProcessor::prepareToPlay(double sampleRate,
     spec.numChannels = getTotalNumOutputChannels();
 
     tremolo.prepare(sampleRate, samplesPerBlock, spec);
+    reverb.prepare(spec);
 //    bandPassFilter.prepare(spec);
 //    highPassFilter.prepare(spec);
 }
@@ -177,6 +190,11 @@ void AudioPluginAudioProcessor::processBlock(juce::AudioBuffer<float> &buffer,
     juce::ignoreUnused(midiMessages);
 
     updateParameters();
+
+    if (reverb.isActive())
+    {
+        reverb.process(buffer);
+    }
 
     if (tremolo.isActive())
     {

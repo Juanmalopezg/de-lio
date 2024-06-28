@@ -18,12 +18,17 @@ public:
 private:
     AudioPluginAudioProcessor &audioProcessor;
 
-    juce::Slider lfoFreqSlider;
-    juce::TextButton lfoOnOffButton;
+    juce::Slider tremoloFreqSlider;
+    juce::TextButton tremoloOnOffButton;
     juce::ComboBox lfoChoiceCombo;
-    std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> lfoOnOffButtonAttachment;
-    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> lfoFrequencyAttachment;
+    std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> tremoloOnOffButtonAttachment;
+    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> tremoloFrequencyAttachment;
     std::unique_ptr<juce::AudioProcessorValueTreeState::ComboBoxAttachment> lfoChoiceAttachment;
+
+    juce::Slider reverbRateSlider;
+    juce::TextButton reverbOnOffButton;
+    std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> reverbOnOffButtonAttachment;
+    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> reverbRateAttachment;
 
     juce::TextButton lowPassOnOffButton;
     juce::TextButton bandPassOnOffButton;
@@ -41,9 +46,11 @@ private:
 
     void prepareSlider();
 
-    void prepareLFO();
+    void prepareTremolo();
 
     void prepareFilters();
 
     void sliderValueChanged(juce::Slider *) override;
+
+    void prepareReverb();
 };

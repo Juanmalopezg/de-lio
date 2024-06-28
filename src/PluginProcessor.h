@@ -6,6 +6,7 @@
 #include "dsp/Panning.h"
 //#include "dsp/Filter.h"
 #include "dsp/Tremolo.h"
+#include "dsp/Reverb.h"
 
 //==============================================================================
 class AudioPluginAudioProcessor : public juce::AudioProcessor {
@@ -67,6 +68,7 @@ private:
     void updateParameters();
 
     Tremolo tremolo;
+    Reverb reverb;
 
     Filter bandPassFilter;
     Filter highPassFilter;

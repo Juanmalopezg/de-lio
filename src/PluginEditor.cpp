@@ -8,7 +8,8 @@ AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor(
 
     prepareSlider();
     prepareComboBox();
-    prepareLFO();
+    prepareTremolo();
+    prepareReverb();
     prepareFilters();
 
     juce::ignoreUnused(audioProcessor);
@@ -31,17 +32,21 @@ void AudioPluginAudioProcessorEditor::paint(juce::Graphics &g) {
 }
 
 void AudioPluginAudioProcessorEditor::resized() {
-    lfoOnOffButton.setBounds(20, 20, 50, 50);
-    lfoChoiceCombo.setBounds(80, 40, 100, 20);
-    lfoFreqSlider.setBounds(180, 0, 100, 100);
+    tremoloOnOffButton.setBounds(20, 20, 50, 50);
+    tremoloFreqSlider.setBounds(100, 0, 100, 100);
+
+    reverbOnOffButton.setBounds(20, 120, 50, 50);
+    reverbRateSlider.setBounds(100, 100, 100, 100);
+
+//    lfoChoiceCombo.setBounds(350, 40, 100, 20);
 
 
-    lowPassOnOffButton.setBounds(20, 120, 50, 50);
-    bandPassOnOffButton.setBounds(80, 120, 50, 50);
-    highPassOnOffButton.setBounds(140, 120, 50, 50);
+//    lowPassOnOffButton.setBounds(20, 120, 50, 50);
+//    bandPassOnOffButton.setBounds(80, 120, 50, 50);
+//    highPassOnOffButton.setBounds(140, 120, 50, 50);
 
-    volumeSlider.setBounds(0, 170, 100, 100);
-    panSlider.setBounds(100, 170, 100, 100);
+    volumeSlider.setBounds(0, 200, 100, 100);
+    panSlider.setBounds(100, 200, 100, 100);
 }
 
 void AudioPluginAudioProcessorEditor::prepareComboBox() {
@@ -101,27 +106,47 @@ void AudioPluginAudioProcessorEditor::prepareFilters() {
 
 }
 
-void AudioPluginAudioProcessorEditor::prepareLFO() {
-    lfoOnOffButton.setButtonText("Tremolo");
-    lfoOnOffButton.setClickingTogglesState(true);
+void AudioPluginAudioProcessorEditor::prepareTremolo() {
+    tremoloOnOffButton.setButtonText("Tremolo");
+    tremoloOnOffButton.setClickingTogglesState(true);
 
-    addAndMakeVisible(lfoOnOffButton);
-    lfoOnOffButtonAttachment = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(
-            audioProcessor.state, "Tremolo", lfoOnOffButton);
+    addAndMakeVisible(tremoloOnOffButton);
+    tremoloOnOffButtonAttachment = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(
+            audioProcessor.state, "Tremolo", tremoloOnOffButton);
 
 
-    lfoFreqSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
-    lfoFreqSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 100, 20);
-    lfoFreqSlider.setValue(2.0f);
-    addAndMakeVisible(lfoFreqSlider);
-    lfoFreqSlider.addListener(this);
-    lfoFrequencyAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
-            audioProcessor.state, "TremoloFreq", lfoFreqSlider);
+    tremoloFreqSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+    tremoloFreqSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 100, 20);
+    tremoloFreqSlider.setValue(2.0f);
+    addAndMakeVisible(tremoloFreqSlider);
+    tremoloFreqSlider.addListener(this);
+    tremoloFrequencyAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
+            audioProcessor.state, "TremoloFreq", tremoloFreqSlider);
+}
+
+void AudioPluginAudioProcessorEditor::prepareReverb() {
+    reverbOnOffButton.setButtonText("Reverb");
+    reverbOnOffButton.setClickingTogglesState(true);
+
+    addAndMakeVisible(reverbOnOffButton);
+    reverbOnOffButtonAttachment = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(
+            audioProcessor.state, "Reverb", reverbOnOffButton);
+
+
+    reverbRateSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+    reverbRateSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 100, 20);
+    reverbRateSlider.setValue(2.0f);
+    addAndMakeVisible(reverbRateSlider);
+    reverbRateSlider.addListener(this);
+    reverbRateAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
+            audioProcessor.state, "ReverbRate", reverbRateSlider);
 }
 
 void AudioPluginAudioProcessorEditor::sliderValueChanged(juce::Slider *s) {
-    if (s == &lfoFreqSlider)
+    if (s == &tremoloFreqSlider)
     {
         DBG(s->getValue());
     }
 }
+
+
