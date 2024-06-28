@@ -34,15 +34,12 @@ AudioPluginAudioProcessor::createParameters() {
     parameters.add(std::make_unique<juce::AudioParameterBool>(
             juce::ParameterID{"Reverb", 1}, "Reverb On/Off", false));
     parameters.add(std::make_unique<juce::AudioParameterFloat>(
-            juce::ParameterID{"ReverbRate", 1}, "Reverb Rate", 0.1f, 500.0f,
-            5.0f));
+            juce::ParameterID{"DryWet", 1}, "Dry/Wet", 0.0f, 1.0f, 0.5f));
 
     // Oscillator parameters
     parameters.add(std::make_unique<juce::AudioParameterChoice>(
             juce::ParameterID{"Waveform", 1}, "Waveform",
             juce::StringArray("Sine", "Square", "Saw", "Triangle"), 1));
-    parameters.add(std::make_unique<juce::AudioParameterFloat>(
-            juce::ParameterID{"DryWet", 1}, "DryWet", 0.0f, 100.0f, 100.0f));
 
     // Filter parameters
     parameters.add(std::make_unique<juce::AudioParameterBool>(
@@ -69,10 +66,10 @@ void AudioPluginAudioProcessor::updateParameters() {
             static_cast<bool>(*state.getRawParameterValue("Tremolo")));
     tremolo.update(frequency);
 
-    float rate = *state.getRawParameterValue("ReverbRate");
+    float dryWet = *state.getRawParameterValue("DryWet");
     reverb.setActive(
             static_cast<bool>(*state.getRawParameterValue("Reverb")));
-    reverb.update(rate);
+    reverb.update(dryWet);
 
 //    bandPassFilter.setActive(
 //            static_cast<bool>(*state.getRawParameterValue("PassBand")));
@@ -191,15 +188,16 @@ void AudioPluginAudioProcessor::processBlock(juce::AudioBuffer<float> &buffer,
 
     updateParameters();
 
+    if (tremolo.isActive())
+    {
+        tremolo.process(buffer);
+    }
+
     if (reverb.isActive())
     {
         reverb.process(buffer);
     }
 
-    if (tremolo.isActive())
-    {
-        tremolo.process(buffer);
-    }
 
 //    if (lowPassFilter.isActive())
 //    {

@@ -36,7 +36,7 @@ void AudioPluginAudioProcessorEditor::resized() {
     tremoloFreqSlider.setBounds(100, 0, 100, 100);
 
     reverbOnOffButton.setBounds(20, 120, 50, 50);
-    reverbRateSlider.setBounds(100, 100, 100, 100);
+    dryWetSlider.setBounds(100, 100, 100, 100);
 
 //    lfoChoiceCombo.setBounds(350, 40, 100, 20);
 
@@ -133,13 +133,13 @@ void AudioPluginAudioProcessorEditor::prepareReverb() {
             audioProcessor.state, "Reverb", reverbOnOffButton);
 
 
-    reverbRateSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
-    reverbRateSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 100, 20);
-    reverbRateSlider.setValue(2.0f);
-    addAndMakeVisible(reverbRateSlider);
-    reverbRateSlider.addListener(this);
-    reverbRateAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
-            audioProcessor.state, "ReverbRate", reverbRateSlider);
+    dryWetSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+    dryWetSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 100, 20);
+    dryWetSlider.setValue(0.5f);
+    addAndMakeVisible(dryWetSlider);
+    dryWetSlider.addListener(this);
+    dryWetAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
+            audioProcessor.state, "DryWet", dryWetSlider);
 }
 
 void AudioPluginAudioProcessorEditor::sliderValueChanged(juce::Slider *s) {

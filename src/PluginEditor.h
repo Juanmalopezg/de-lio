@@ -25,10 +25,10 @@ private:
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> tremoloFrequencyAttachment;
     std::unique_ptr<juce::AudioProcessorValueTreeState::ComboBoxAttachment> lfoChoiceAttachment;
 
-    juce::Slider reverbRateSlider;
+    juce::Slider dryWetSlider;
     juce::TextButton reverbOnOffButton;
     std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> reverbOnOffButtonAttachment;
-    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> reverbRateAttachment;
+    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> dryWetAttachment;
 
     juce::TextButton lowPassOnOffButton;
     juce::TextButton bandPassOnOffButton;
