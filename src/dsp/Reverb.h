@@ -6,7 +6,7 @@ class Reverb {
 public:
     void prepare(juce::dsp::ProcessSpec spec);
 
-    void update(float value);
+    void update(float mix, float size);
 
     void process(juce::AudioBuffer<float> &buffer);
 
@@ -16,6 +16,7 @@ public:
 
 
 private:
+    juce::Reverb reverb;
     juce::dsp::Convolution convolution{juce::dsp::Convolution::NonUniform{512}};
     juce::dsp::DryWetMixer<float> dryWetMixer;
     bool isReverbActive = false;
