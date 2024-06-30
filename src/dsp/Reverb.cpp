@@ -3,19 +3,11 @@
 
 
 void Reverb::prepare(juce::dsp::ProcessSpec spec) {
-    convolution.reset();
-    convolution.prepare(spec);
-    convolution.loadImpulseResponse(
-            BinaryData::IR_wav,
-            BinaryData::IR_wavSize,
-            juce::dsp::Convolution::Stereo::yes,
-            juce::dsp::Convolution::Trim::yes,
-            BinaryData::IR_wavSize / 3,
-            juce::dsp::Convolution::Normalise::no);
-
     dryWetMixer.prepare(spec);
     dryWetMixer.setWetMixProportion(0.5);
     dryWetMixer.setWetLatency(0.0f);
+
+    reverb.setSampleRate(spec.sampleRate);
 }
 
 void Reverb::process(juce::AudioBuffer<float> &buffer) {
@@ -24,8 +16,7 @@ void Reverb::process(juce::AudioBuffer<float> &buffer) {
     dryWetMixer.pushDrySamples(dryBlock);
 
     juce::dsp::AudioBlock<float> wetBlock(buffer);
-    juce::dsp::ProcessContextReplacing<float> wetContext(wetBlock);
-    convolution.process(wetContext);
+    reverb.processStereo(wetBlock.getChannelPointer(0), wetBlock.getChannelPointer(1), wetBlock.getNumSamples());
 
     juce::dsp::AudioBlock<float> mixBlock(buffer);
     dryWetMixer.mixWetSamples(mixBlock);
@@ -39,6 +30,7 @@ bool Reverb::isActive() const {
     return isReverbActive;
 }
 
-void Reverb::update(float value) {
-    dryWetMixer.setWetMixProportion(value);
+void Reverb::update(float mix, float size) {
+    dryWetMixer.setWetMixProportion(mix);
+    reverb.setParameters(juce::Reverb::Parameters({size}));
 }

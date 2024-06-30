@@ -17,7 +17,6 @@ public:
 
 private:
     juce::Reverb reverb;
-    juce::dsp::Convolution convolution{juce::dsp::Convolution::NonUniform{512}};
     juce::dsp::DryWetMixer<float> dryWetMixer;
     bool isReverbActive = false;
 };
