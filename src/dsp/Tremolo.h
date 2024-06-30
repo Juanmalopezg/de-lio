@@ -19,6 +19,5 @@ private:
     LFO lfoLeft, lfoRight;
     Filter lowPassFilter;
 
-    float freq;
     bool isTremoloActive = false;
 };
