@@ -16,7 +16,7 @@ public:
     bool isActive();
 
 private:
-    LFO lfo;
+    LFO lfoLeft, lfoRight;
     Filter lowPassFilter;
 
     float freq;

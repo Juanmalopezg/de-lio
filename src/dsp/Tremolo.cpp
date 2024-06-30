@@ -1,8 +1,8 @@
-
 #include "Tremolo.h"
 
 void Tremolo::update(float value) {
-    lfo.setFrequency(value);
+    lfoLeft.setFrequency(value);
+    lfoRight.setFrequency(value);
 }
 
 void Tremolo::setActive(bool value) {
@@ -12,22 +12,26 @@ void Tremolo::setActive(bool value) {
 void Tremolo::prepare(double sampleRate, int samplesPerBlock,
                       juce::dsp::ProcessSpec spec) {
     lowPassFilter.prepare(spec);
-    lfo.prepareToPlay(sampleRate, samplesPerBlock);
+    lfoLeft.prepareToPlay(sampleRate, samplesPerBlock);
+    lfoRight.prepareToPlay(sampleRate, samplesPerBlock);
 }
 
 void Tremolo::process(juce::AudioBuffer<float> &buffer) {
-//    lfo.process(buffer, LFO::Sine);
-    lowPassFilter.processLowPass(buffer);
+    int numChannels = buffer.getNumChannels();
 
-    for (int channel = 0; channel < buffer.getNumChannels(); ++channel)
+    for (int i = 0; i < buffer.getNumSamples(); ++i)
     {
-        auto *channelData = buffer.getWritePointer(channel);
-        for (int i = 0; i < buffer.getNumSamples(); ++i)
+        auto leftSample = lfoLeft.getLfoSine().processSample(0);
+        auto rightSample = numChannels > 1 ? lfoRight.getLfoSine().processSample(1) : leftSample;
+
+        for (int channel = 0; channel < numChannels; ++channel)
         {
-            auto sample = lfo.getLfoSine().processSample(0);
-            channelData[i] *= (sample + 1.f) * 0.5f;
+            auto *channelData = buffer.getWritePointer(channel);
+            channelData[i] *= ((channel == 0 ? leftSample : rightSample) + 1.f) * 0.5f;
         }
     }
+
+    lowPassFilter.processLowPass(buffer);
 }
 
 bool Tremolo::isActive() {
