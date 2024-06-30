@@ -53,7 +53,7 @@ AudioPluginAudioProcessor::createParameters() {
 
     // General parameters
     parameters.add(std::make_unique<juce::AudioParameterFloat>(
-            juce::ParameterID{"Volume", 1}, "Volume", 0.0f, 1.0f, 0.5f));
+            juce::ParameterID{"Volume", 1}, "Volume", 0.0f, 3.0f, 0.5f));
     parameters.add(std::make_unique<juce::AudioParameterFloat>(
             juce::ParameterID{"Panning", 1}, "Panning", 0.0f,
             juce::MathConstants<float>::pi / 2.0f,
