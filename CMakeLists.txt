@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.22.1)
 
-set(PROJECT_NAME "Multifilter")
+set(PROJECT_NAME "DeLio")
 set(FORMATS Standalone VST3)
 
 project(${PROJECT_NAME} VERSION 0.0.1)
