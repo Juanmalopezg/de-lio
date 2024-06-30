@@ -35,6 +35,8 @@ AudioPluginAudioProcessor::createParameters() {
             juce::ParameterID{"Reverb", 1}, "Reverb On/Off", false));
     parameters.add(std::make_unique<juce::AudioParameterFloat>(
             juce::ParameterID{"DryWet", 1}, "Dry/Wet", 0.0f, 1.0f, 0.5f));
+    parameters.add(std::make_unique<juce::AudioParameterFloat>(
+            juce::ParameterID{"Size", 1}, "Room Size", 0.0f, 1.0f, 0.5f));
 
     // Oscillator parameters
     parameters.add(std::make_unique<juce::AudioParameterChoice>(
@@ -67,9 +69,11 @@ void AudioPluginAudioProcessor::updateParameters() {
     tremolo.update(frequency);
 
     float dryWet = *state.getRawParameterValue("DryWet");
+    float size = *state.getRawParameterValue("Size");
+
     reverb.setActive(
             static_cast<bool>(*state.getRawParameterValue("Reverb")));
-    reverb.update(dryWet);
+    reverb.update(dryWet, size);
 
 //    bandPassFilter.setActive(
 //            static_cast<bool>(*state.getRawParameterValue("PassBand")));

@@ -30,6 +30,9 @@ private:
     std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> reverbOnOffButtonAttachment;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> dryWetAttachment;
 
+    juce::Slider roomSizeSlider;
+    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> roomSizeAttachment;
+
     juce::TextButton lowPassOnOffButton;
     juce::TextButton bandPassOnOffButton;
     juce::TextButton highPassOnOffButton;

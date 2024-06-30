@@ -37,6 +37,7 @@ void AudioPluginAudioProcessorEditor::resized() {
 
     reverbOnOffButton.setBounds(20, 120, 50, 50);
     dryWetSlider.setBounds(100, 100, 100, 100);
+    roomSizeSlider.setBounds(200, 100, 100, 100);
 
 //    lfoChoiceCombo.setBounds(350, 40, 100, 20);
 
@@ -132,6 +133,14 @@ void AudioPluginAudioProcessorEditor::prepareReverb() {
     reverbOnOffButtonAttachment = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(
             audioProcessor.state, "Reverb", reverbOnOffButton);
 
+
+    roomSizeSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+    roomSizeSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 100, 20);
+    roomSizeSlider.setValue(0.5f);
+    addAndMakeVisible(roomSizeSlider);
+    roomSizeSlider.addListener(this);
+    roomSizeAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
+            audioProcessor.state, "Size", roomSizeSlider);
 
     dryWetSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
     dryWetSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 100, 20);
