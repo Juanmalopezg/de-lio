@@ -49,6 +49,7 @@ private:
 
     KnobLookAndFeel knobLookAndFeel;
     SwitchLookAndFeel switchLookAndFeel;
+    std::unique_ptr<juce::Drawable> bg;
 
     void prepareComboBox();
 
