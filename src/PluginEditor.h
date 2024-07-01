@@ -3,6 +3,8 @@
 #include "PluginProcessor.h"
 #include "gui/KnobLookAndFeel.h"
 #include "gui/SwitchLookAndFeel.h"
+#include <juce_core/system/juce_TargetPlatform.h> // Este archivo incluye AppConfig.h
+
 
 //==============================================================================
 class AudioPluginAudioProcessorEditor
@@ -50,6 +52,7 @@ private:
     KnobLookAndFeel knobLookAndFeel;
     SwitchLookAndFeel switchLookAndFeel;
     std::unique_ptr<juce::Drawable> bg;
+    juce::Label versionLabel;
 
     void prepareComboBox();
 

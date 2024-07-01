@@ -28,6 +28,11 @@ void AudioPluginAudioProcessorEditor::paint(juce::Graphics &g) {
     bg = juce::Drawable::createFromImageData(
             BinaryData::bg_png, BinaryData::bg_pngSize);
     addAndMakeVisible(*bg);
+
+    juce::String versionString = "1.0.0";
+    versionLabel.setText("v " + versionString, juce::dontSendNotification);
+    versionLabel.setColour(juce::Label::textColourId,juce::Colour(0xFFFFD95A));
+    addAndMakeVisible(versionLabel);
 }
 
 void AudioPluginAudioProcessorEditor::resized() {
@@ -40,6 +45,8 @@ void AudioPluginAudioProcessorEditor::resized() {
 
     volumeSlider.setBounds(((getWidth() / 5) * 2) - 45, 300, 90, 90);
     panSlider.setBounds(((getWidth() / 5) * 3) - 25, 300, 90, 90);
+
+    versionLabel.setBounds((getWidth() / 2) - 25, 400, 50, 50);;
 }
 
 void AudioPluginAudioProcessorEditor::prepareComboBox() {
