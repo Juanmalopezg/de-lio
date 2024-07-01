@@ -5,7 +5,7 @@
 
 //==============================================================================
 class AudioPluginAudioProcessorEditor
-        : public juce::AudioProcessorEditor, public juce::Slider::Listener {
+        : public juce::AudioProcessorEditor {
 public:
     explicit AudioPluginAudioProcessorEditor(AudioPluginAudioProcessor &);
 
@@ -53,10 +53,6 @@ private:
     void prepareSlider();
 
     void prepareTremolo();
-
-    void prepareFilters();
-
-    void sliderValueChanged(juce::Slider *) override;
 
     void prepareReverb();
 };

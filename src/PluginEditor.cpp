@@ -10,7 +10,6 @@ AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor(
     prepareComboBox();
     prepareTremolo();
     prepareReverb();
-    prepareFilters();
 
     juce::ignoreUnused(audioProcessor);
     setSize(350, 400);
@@ -18,7 +17,6 @@ AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor(
 
 AudioPluginAudioProcessorEditor::~AudioPluginAudioProcessorEditor() {
     volumeSlider.setLookAndFeel(nullptr);
-    volumeSlider.removeListener(this);
 }
 
 //==============================================================================
@@ -37,13 +35,6 @@ void AudioPluginAudioProcessorEditor::resized() {
     reverbOnOffButton.setBounds(20, 120, 50, 50);
     dryWetSlider.setBounds(100, 100, 100, 100);
     roomSizeSlider.setBounds(200, 100, 100, 100);
-
-//    lfoChoiceCombo.setBounds(350, 40, 100, 20);
-
-
-//    lowPassOnOffButton.setBounds(20, 120, 50, 50);
-//    bandPassOnOffButton.setBounds(80, 120, 50, 50);
-//    highPassOnOffButton.setBounds(140, 120, 50, 50);
 
     volumeSlider.setBounds(0, 200, 100, 100);
     panSlider.setBounds(100, 200, 100, 100);
@@ -68,7 +59,6 @@ void AudioPluginAudioProcessorEditor::prepareSlider() {
     volumeSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 100, 20);
     volumeSlider.setTextValueSuffix(" dB");
     addAndMakeVisible(volumeSlider);
-    volumeSlider.addListener(this);
     volumeSlider.setLookAndFeel(&knobLookAndFeel);
     volumeAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
             audioProcessor.state,
@@ -78,34 +68,10 @@ void AudioPluginAudioProcessorEditor::prepareSlider() {
     panSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 100, 20);
     panSlider.setTextValueSuffix(" Pan");
     addAndMakeVisible(panSlider);
-    panSlider.addListener(this);
     panSlider.setLookAndFeel(&knobLookAndFeel);
     panningAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
             audioProcessor.state,
             "Panning", panSlider);
-}
-
-void AudioPluginAudioProcessorEditor::prepareFilters() {
-    lowPassOnOffButton.setButtonText("LowPass");
-    lowPassOnOffButton.setClickingTogglesState(true);
-    addAndMakeVisible(lowPassOnOffButton);
-
-    lowPassOnOffButtonAttachment = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(
-            audioProcessor.state, "LowPass", lowPassOnOffButton);
-
-    bandPassOnOffButton.setButtonText("BandPass");
-    bandPassOnOffButton.setClickingTogglesState(true);
-    addAndMakeVisible(bandPassOnOffButton);
-
-    bandPassOnOffButtonAttachment = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(
-            audioProcessor.state, "BandPass", bandPassOnOffButton);
-
-    highPassOnOffButton.setButtonText("HighPass");
-    highPassOnOffButton.setClickingTogglesState(true);
-    addAndMakeVisible(highPassOnOffButton);
-    highPassOnOffButtonAttachment = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(
-            audioProcessor.state, "HighPass", highPassOnOffButton);
-
 }
 
 void AudioPluginAudioProcessorEditor::prepareTremolo() {
@@ -121,7 +87,6 @@ void AudioPluginAudioProcessorEditor::prepareTremolo() {
     tremoloFreqSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 100, 20);
     tremoloFreqSlider.setValue(2.0f);
     addAndMakeVisible(tremoloFreqSlider);
-    tremoloFreqSlider.addListener(this);
     tremoloFreqSlider.setLookAndFeel(&knobLookAndFeel);
     tremoloFrequencyAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
             audioProcessor.state, "TremoloFreq", tremoloFreqSlider);
@@ -140,7 +105,6 @@ void AudioPluginAudioProcessorEditor::prepareReverb() {
     roomSizeSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 100, 20);
     roomSizeSlider.setValue(0.5f);
     addAndMakeVisible(roomSizeSlider);
-    roomSizeSlider.addListener(this);
     roomSizeSlider.setLookAndFeel(&knobLookAndFeel);
     roomSizeAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
             audioProcessor.state, "Size", roomSizeSlider);
@@ -150,17 +114,7 @@ void AudioPluginAudioProcessorEditor::prepareReverb() {
     dryWetSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 100, 20);
     dryWetSlider.setValue(0.5f);
     addAndMakeVisible(dryWetSlider);
-    dryWetSlider.addListener(this);
     dryWetSlider.setLookAndFeel(&knobLookAndFeel);
     dryWetAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
             audioProcessor.state, "DryWet", dryWetSlider);
 }
-
-void AudioPluginAudioProcessorEditor::sliderValueChanged(juce::Slider *s) {
-    if (s == &tremoloFreqSlider)
-    {
-        DBG(s->getValue());
-    }
-}
-
-

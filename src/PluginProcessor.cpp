@@ -38,19 +38,6 @@ AudioPluginAudioProcessor::createParameters() {
     parameters.add(std::make_unique<juce::AudioParameterFloat>(
             juce::ParameterID{"Size", 1}, "Room Size", 0.0f, 1.0f, 0.5f));
 
-    // Oscillator parameters
-    parameters.add(std::make_unique<juce::AudioParameterChoice>(
-            juce::ParameterID{"Waveform", 1}, "Waveform",
-            juce::StringArray("Sine", "Square", "Saw", "Triangle"), 1));
-
-    // Filter parameters
-    parameters.add(std::make_unique<juce::AudioParameterBool>(
-            juce::ParameterID{"LowPass", 1}, "LowPass On/Off", false));
-    parameters.add(std::make_unique<juce::AudioParameterBool>(
-            juce::ParameterID{"PassBand", 1}, "PassBand On/Off", false));
-    parameters.add(std::make_unique<juce::AudioParameterBool>(
-            juce::ParameterID{"HighPass", 1}, "HighPass On/Off", false));
-
     // General parameters
     parameters.add(std::make_unique<juce::AudioParameterFloat>(
             juce::ParameterID{"Volume", 1}, "Volume", 0.0f, 3.0f, 0.5f));
@@ -74,11 +61,6 @@ void AudioPluginAudioProcessor::updateParameters() {
     reverb.setActive(
             static_cast<bool>(*state.getRawParameterValue("Reverb")));
     reverb.update(dryWet, size);
-
-//    bandPassFilter.setActive(
-//            static_cast<bool>(*state.getRawParameterValue("PassBand")));
-//    highPassFilter.setActive(
-//            static_cast<bool>(*state.getRawParameterValue("HighPass")));
 
     float v = *state.getRawParameterValue("Volume");
     float p = *state.getRawParameterValue("Panning");
@@ -201,22 +183,6 @@ void AudioPluginAudioProcessor::processBlock(juce::AudioBuffer<float> &buffer,
     {
         reverb.process(buffer);
     }
-
-
-//    if (lowPassFilter.isActive())
-//    {
-//        lowPassFilter.processLowPass(buffer);
-//    }
-//
-//    if (bandPassFilter.isActive())
-//    {
-//        bandPassFilter.processBandPass(buffer);
-//    }
-//
-//    if (highPassFilter.isActive())
-//    {
-//        highPassFilter.processHighPass(buffer);
-//    }
 
     volume.process(buffer);
     panning.process(buffer);
