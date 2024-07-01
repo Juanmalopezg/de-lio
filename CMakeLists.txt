@@ -59,7 +59,7 @@ target_compile_definitions("${PROJECT_NAME}"
         JUCE_USE_CURL=0     # If you remove this, add `NEEDS_CURL TRUE` to the `juce_add_plugin` call
         JUCE_VST3_CAN_REPLACE_VST2=0)
 
-juce_add_binary_data("${PROJECT_NAME}Data" SOURCES ${CMAKE_CURRENT_SOURCE_DIR}\\assets\\IR.wav)
+juce_add_binary_data("${PROJECT_NAME}Data" SOURCES ${CMAKE_CURRENT_SOURCE_DIR}\\assets\\knob.png)
 
 target_link_libraries("${PROJECT_NAME}"
         PRIVATE
@@ -71,4 +71,5 @@ target_link_libraries("${PROJECT_NAME}"
         juce::juce_recommended_lto_flags
         juce::juce_recommended_warning_flags
         juce::juce_dsp
-        juce::juce_gui_basics)
+        juce::juce_gui_basics
+        juce::juce_core)

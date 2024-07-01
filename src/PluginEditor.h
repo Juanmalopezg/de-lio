@@ -1,6 +1,7 @@
 #pragma once
 
 #include "PluginProcessor.h"
+#include "gui/KnobLookAndFeel.h"
 
 //==============================================================================
 class AudioPluginAudioProcessorEditor
@@ -44,6 +45,8 @@ private:
     juce::Slider panSlider;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> volumeAttachment;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> panningAttachment;
+
+    KnobLookAndFeel knobLookAndFeel;
 
     void prepareComboBox();
 

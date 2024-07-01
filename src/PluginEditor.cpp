@@ -13,7 +13,7 @@ AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor(
     prepareFilters();
 
     juce::ignoreUnused(audioProcessor);
-    setSize(600, 400);
+    setSize(350, 400);
 }
 
 AudioPluginAudioProcessorEditor::~AudioPluginAudioProcessorEditor() {
@@ -23,11 +23,10 @@ AudioPluginAudioProcessorEditor::~AudioPluginAudioProcessorEditor() {
 
 //==============================================================================
 void AudioPluginAudioProcessorEditor::paint(juce::Graphics &g) {
-    // (Our component is opaque, so we must completely fill the background with a solid colour)
-    g.fillAll(getLookAndFeel().findColour(
-            juce::ResizableWindow::backgroundColourId));
+    g.fillAll(juce::Colour(0xFF303030));
 
-    g.setColour(juce::Colours::white);
+
+    g.setColour(juce::Colour(0xFFFFD700));
     g.setFont(15.0f);
 }
 
@@ -70,6 +69,7 @@ void AudioPluginAudioProcessorEditor::prepareSlider() {
     volumeSlider.setTextValueSuffix(" dB");
     addAndMakeVisible(volumeSlider);
     volumeSlider.addListener(this);
+    volumeSlider.setLookAndFeel(&knobLookAndFeel);
     volumeAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
             audioProcessor.state,
             "Volume", volumeSlider);
@@ -79,6 +79,7 @@ void AudioPluginAudioProcessorEditor::prepareSlider() {
     panSlider.setTextValueSuffix(" Pan");
     addAndMakeVisible(panSlider);
     panSlider.addListener(this);
+    panSlider.setLookAndFeel(&knobLookAndFeel);
     panningAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
             audioProcessor.state,
             "Panning", panSlider);
@@ -121,6 +122,7 @@ void AudioPluginAudioProcessorEditor::prepareTremolo() {
     tremoloFreqSlider.setValue(2.0f);
     addAndMakeVisible(tremoloFreqSlider);
     tremoloFreqSlider.addListener(this);
+    tremoloFreqSlider.setLookAndFeel(&knobLookAndFeel);
     tremoloFrequencyAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
             audioProcessor.state, "TremoloFreq", tremoloFreqSlider);
 }
@@ -139,14 +141,17 @@ void AudioPluginAudioProcessorEditor::prepareReverb() {
     roomSizeSlider.setValue(0.5f);
     addAndMakeVisible(roomSizeSlider);
     roomSizeSlider.addListener(this);
+    roomSizeSlider.setLookAndFeel(&knobLookAndFeel);
     roomSizeAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
             audioProcessor.state, "Size", roomSizeSlider);
+
 
     dryWetSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
     dryWetSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 100, 20);
     dryWetSlider.setValue(0.5f);
     addAndMakeVisible(dryWetSlider);
     dryWetSlider.addListener(this);
+    dryWetSlider.setLookAndFeel(&knobLookAndFeel);
     dryWetAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
             audioProcessor.state, "DryWet", dryWetSlider);
 }
