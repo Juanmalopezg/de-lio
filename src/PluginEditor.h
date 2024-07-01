@@ -2,6 +2,7 @@
 
 #include "PluginProcessor.h"
 #include "gui/KnobLookAndFeel.h"
+#include "gui/SwitchLookAndFeel.h"
 
 //==============================================================================
 class AudioPluginAudioProcessorEditor
@@ -47,6 +48,7 @@ private:
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> panningAttachment;
 
     KnobLookAndFeel knobLookAndFeel;
+    SwitchLookAndFeel switchLookAndFeel;
 
     void prepareComboBox();
 

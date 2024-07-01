@@ -29,15 +29,15 @@ void AudioPluginAudioProcessorEditor::paint(juce::Graphics &g) {
 }
 
 void AudioPluginAudioProcessorEditor::resized() {
-    tremoloOnOffButton.setBounds(20, 20, 50, 50);
-    tremoloFreqSlider.setBounds(100, 0, 100, 100);
+    tremoloOnOffButton.setBounds(((getWidth() / 5) * 1), 50, 50, 50);
+    tremoloFreqSlider.setBounds(((getWidth() / 5) * 2), 20, 120, 120);
 
-    reverbOnOffButton.setBounds(20, 120, 50, 50);
-    dryWetSlider.setBounds(100, 100, 100, 100);
-    roomSizeSlider.setBounds(200, 100, 100, 100);
+    reverbOnOffButton.setBounds(((getWidth() / 5) * 1), 175, 50, 50);
+    dryWetSlider.setBounds(((getWidth() / 5) * 2), 150, 100, 100);
+    roomSizeSlider.setBounds(((getWidth() / 5) * 3), 150, 100, 100);
 
-    volumeSlider.setBounds(0, 200, 100, 100);
-    panSlider.setBounds(100, 200, 100, 100);
+    volumeSlider.setBounds(((getWidth() / 4) * 1), 260, 100, 100);
+    panSlider.setBounds(((getWidth() / 4) * 2), 260, 100, 100);
 }
 
 void AudioPluginAudioProcessorEditor::prepareComboBox() {
@@ -56,7 +56,7 @@ void AudioPluginAudioProcessorEditor::prepareComboBox() {
 
 void AudioPluginAudioProcessorEditor::prepareSlider() {
     volumeSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
-    volumeSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 100, 20);
+    volumeSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 50, 20);
     volumeSlider.setTextValueSuffix(" dB");
     addAndMakeVisible(volumeSlider);
     volumeSlider.setLookAndFeel(&knobLookAndFeel);
@@ -65,7 +65,7 @@ void AudioPluginAudioProcessorEditor::prepareSlider() {
             "Volume", volumeSlider);
 
     panSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
-    panSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 100, 20);
+    panSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 50, 20);
     panSlider.setTextValueSuffix(" Pan");
     addAndMakeVisible(panSlider);
     panSlider.setLookAndFeel(&knobLookAndFeel);
@@ -75,8 +75,8 @@ void AudioPluginAudioProcessorEditor::prepareSlider() {
 }
 
 void AudioPluginAudioProcessorEditor::prepareTremolo() {
-    tremoloOnOffButton.setButtonText("Tremolo");
     tremoloOnOffButton.setClickingTogglesState(true);
+    tremoloOnOffButton.setLookAndFeel(&switchLookAndFeel);
 
     addAndMakeVisible(tremoloOnOffButton);
     tremoloOnOffButtonAttachment = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(
@@ -84,7 +84,7 @@ void AudioPluginAudioProcessorEditor::prepareTremolo() {
 
 
     tremoloFreqSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
-    tremoloFreqSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 100, 20);
+    tremoloFreqSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 50, 20);
     tremoloFreqSlider.setValue(2.0f);
     addAndMakeVisible(tremoloFreqSlider);
     tremoloFreqSlider.setLookAndFeel(&knobLookAndFeel);
@@ -93,16 +93,15 @@ void AudioPluginAudioProcessorEditor::prepareTremolo() {
 }
 
 void AudioPluginAudioProcessorEditor::prepareReverb() {
-    reverbOnOffButton.setButtonText("Reverb");
     reverbOnOffButton.setClickingTogglesState(true);
-
+    reverbOnOffButton.setLookAndFeel(&switchLookAndFeel);
     addAndMakeVisible(reverbOnOffButton);
     reverbOnOffButtonAttachment = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(
             audioProcessor.state, "Reverb", reverbOnOffButton);
 
 
     roomSizeSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
-    roomSizeSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 100, 20);
+    roomSizeSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 50, 20);
     roomSizeSlider.setValue(0.5f);
     addAndMakeVisible(roomSizeSlider);
     roomSizeSlider.setLookAndFeel(&knobLookAndFeel);
@@ -111,7 +110,7 @@ void AudioPluginAudioProcessorEditor::prepareReverb() {
 
 
     dryWetSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
-    dryWetSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 100, 20);
+    dryWetSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 50, 20);
     dryWetSlider.setValue(0.5f);
     addAndMakeVisible(dryWetSlider);
     dryWetSlider.setLookAndFeel(&knobLookAndFeel);
