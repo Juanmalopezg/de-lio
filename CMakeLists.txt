@@ -61,7 +61,7 @@ target_compile_definitions("${PROJECT_NAME}"
         JUCE_USE_CURL=0     # If you remove this, add `NEEDS_CURL TRUE` to the `juce_add_plugin` call
         JUCE_VST3_CAN_REPLACE_VST2=0)
 
-juce_add_binary_data("${PROJECT_NAME}Data" SOURCES ${CMAKE_CURRENT_SOURCE_DIR}\\assets\\knob.png ${CMAKE_CURRENT_SOURCE_DIR}\\assets\\switch.png ${CMAKE_CURRENT_SOURCE_DIR}\\assets\\bg.png)
+juce_add_binary_data("${PROJECT_NAME}Data" SOURCES ${CMAKE_CURRENT_SOURCE_DIR}\\assets\\knob.png ${CMAKE_CURRENT_SOURCE_DIR}\\assets\\switch.png ${CMAKE_CURRENT_SOURCE_DIR}\\assets\\bg.png ${CMAKE_CURRENT_SOURCE_DIR}\\assets\\led.png)
 
 target_link_libraries("${PROJECT_NAME}"
         PRIVATE

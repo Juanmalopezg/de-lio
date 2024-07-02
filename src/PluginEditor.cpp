@@ -36,10 +36,10 @@ void AudioPluginAudioProcessorEditor::paint(juce::Graphics &g) {
 }
 
 void AudioPluginAudioProcessorEditor::resized() {
-    tremoloOnOffButton.setBounds(((getWidth() / 5) * 1) - 35, 95, 50, 50);
+    tremoloOnOffButton.setBounds(((getWidth() / 5) * 1) - 35, 65, 50, 100);
     tremoloFreqSlider.setBounds(((getWidth() / 5) * 2) - 45, 65, 90, 90);
 
-    reverbOnOffButton.setBounds(((getWidth() / 5) * 1) - 35, 215, 50, 50);
+    reverbOnOffButton.setBounds(((getWidth() / 5) * 1) - 35, 185, 50, 100);
     dryWetSlider.setBounds(((getWidth() / 5) * 2) - 45, 185, 90, 90);
     roomSizeSlider.setBounds(((getWidth() / 5) * 3) - 25, 185, 90, 90);
 

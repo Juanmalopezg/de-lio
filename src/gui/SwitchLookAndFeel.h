@@ -7,7 +7,6 @@
 
 #include <juce_gui_basics/juce_gui_basics.h>
 
-
 class SwitchLookAndFeel : public juce::LookAndFeel_V4 {
 public:
     SwitchLookAndFeel();
@@ -19,7 +18,10 @@ public:
 
 private:
     juce::Image switchImage;
+    juce::Image ledImage;
 
+    int ledDrawPosition;
+    int switchDrawPosition;
 };
 
 
