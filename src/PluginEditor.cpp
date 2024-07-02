@@ -7,7 +7,6 @@ AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor(
         : AudioProcessorEditor(&p), audioProcessor(p) {
 
     prepareSlider();
-    prepareComboBox();
     prepareTremolo();
     prepareReverb();
 
@@ -46,21 +45,7 @@ void AudioPluginAudioProcessorEditor::resized() {
     volumeSlider.setBounds(((getWidth() / 5) * 2) - 45, 300, 90, 90);
     panSlider.setBounds(((getWidth() / 5) * 3) - 25, 300, 90, 90);
 
-    versionLabel.setBounds((getWidth() / 2) - 25, 400, 50, 50);;
-}
-
-void AudioPluginAudioProcessorEditor::prepareComboBox() {
-    lfoChoiceCombo.addItem("Sine", 1);
-    lfoChoiceCombo.addItem("Square", 2);
-    lfoChoiceCombo.addItem("Saw", 3);
-    lfoChoiceCombo.addItem("Triangle", 4);
-    lfoChoiceCombo.setJustificationType(juce::Justification::centred);
-    addAndMakeVisible(lfoChoiceCombo);
-
-    lfoChoiceAttachment = std::make_unique<juce::AudioProcessorValueTreeState::ComboBoxAttachment>(
-            audioProcessor.state,
-            "Waveform",
-            lfoChoiceCombo);
+    versionLabel.setBounds((getWidth() / 2) - 25, 400, 50, 50);
 }
 
 void AudioPluginAudioProcessorEditor::prepareSlider() {

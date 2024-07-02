@@ -24,10 +24,8 @@ private:
 
     juce::Slider tremoloFreqSlider;
     juce::TextButton tremoloOnOffButton;
-    juce::ComboBox lfoChoiceCombo;
     std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> tremoloOnOffButtonAttachment;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> tremoloFrequencyAttachment;
-    std::unique_ptr<juce::AudioProcessorValueTreeState::ComboBoxAttachment> lfoChoiceAttachment;
 
     juce::Slider dryWetSlider;
     juce::TextButton reverbOnOffButton;
@@ -53,8 +51,6 @@ private:
     SwitchLookAndFeel switchLookAndFeel;
     std::unique_ptr<juce::Drawable> bg;
     juce::Label versionLabel;
-
-    void prepareComboBox();
 
     void prepareSlider();
 
