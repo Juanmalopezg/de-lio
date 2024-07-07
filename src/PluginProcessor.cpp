@@ -174,14 +174,14 @@ void AudioPluginAudioProcessor::processBlock(juce::AudioBuffer<float> &buffer,
 
     updateParameters();
 
-    if (tremolo.isActive())
-    {
-        tremolo.process(buffer);
-    }
-
     if (reverb.isActive())
     {
         reverb.process(buffer);
+    }
+
+    if (tremolo.isActive())
+    {
+        tremolo.process(buffer);
     }
 
     volume.process(buffer);
