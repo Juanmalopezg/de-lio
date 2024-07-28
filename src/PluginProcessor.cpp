@@ -40,11 +40,10 @@ AudioPluginAudioProcessor::createParameters() {
 
     // General parameters
     parameters.add(std::make_unique<juce::AudioParameterFloat>(
-            juce::ParameterID{"Volume", 1}, "Volume", 0.0f, 3.0f, 0.5f));
-    parameters.add(std::make_unique<juce::AudioParameterFloat>(
-            juce::ParameterID{"Panning", 1}, "Panning", 0.0f,
-            juce::MathConstants<float>::pi / 2.0f,
-            juce::MathConstants<float>::pi / 4.0f));
+            juce::ParameterID{"Volume", 1}, "Volume",
+            juce::NormalisableRange<float>(0.0f, 3.0f, 0.1f), 0.5f));    parameters.add(std::make_unique<juce::AudioParameterFloat>(
+            juce::ParameterID{"Panning", 1}, "Panning",
+            juce::NormalisableRange<float>(-10.0f, 10.0f, 0.1f), 0.0f));
 
     return parameters;
 }
@@ -64,8 +63,11 @@ void AudioPluginAudioProcessor::updateParameters() {
 
     float v = *state.getRawParameterValue("Volume");
     float p = *state.getRawParameterValue("Panning");
+    float normalizedPanning = juce::jmap(p, -10.00f, 10.00f, 0.0f,
+                                        juce::MathConstants<float>::pi / 2.0f);
+
     volume.setValue(v);
-    panning.setValue(p);
+    panning.setValue(normalizedPanning);
 
 }
 
