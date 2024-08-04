@@ -18,39 +18,15 @@ juce_add_plugin("${PROJECT_NAME}"
         # ICON_BIG ...                              # ICON_* arguments specify a path to an image file to use as an icon for the Standalone
         # ICON_SMALL ...
         COMPANY_NAME jmlpzg
-        # IS_SYNTH TRUE/FALSE                       # Is this a synth or an effect?
-        # NEEDS_MIDI_INPUT TRUE/FALSE               # Does the plugin need midi input?
-        # NEEDS_MIDI_OUTPUT TRUE/FALSE              # Does the plugin need midi output?
-        # IS_MIDI_EFFECT TRUE/FALSE                 # Is this plugin a MIDI effect?
-        # EDITOR_WANTS_KEYBOARD_FOCUS TRUE/FALSE    # Does the editor need keyboard focus?
         COPY_PLUGIN_AFTER_BUILD TRUE # On MacOS, plugin will be copied to /Users/you/Library/Audio/Plug-Ins/
         PLUGIN_MANUFACTURER_CODE Jmlp               # This has to be one uppercase, rest lower for AU formats
         PLUGIN_CODE J002                            # A unique four-character plugin id with at least one upper-case character
         FORMATS "${FORMATS}"
         PRODUCT_NAME "${PROJECT_NAME}")        # The name of the final executable, which can differ from the target name
 
-# Manually list all .h and .cpp files for the plugin
-set(SourceFiles
-        src/PluginEditor.h
-        src/PluginProcessor.h
-        src/PluginEditor.cpp
-        src/PluginProcessor.cpp
-        src/dsp/Volume.h
-        src/dsp/Volume.cpp
-        src/dsp/Panning.h
-        src/dsp/Panning.cpp
-        src/dsp/Filter.h
-        src/dsp/Filter.cpp
-        src/dsp/LFO.h
-        src/dsp/LFO.cpp
-        src/dsp/Tremolo.h
-        src/dsp/Tremolo.cpp
-        src/dsp/Reverb.h
-        src/dsp/Reverb.cpp
-        src/gui/KnobLookAndFeel.h
-        src/gui/KnobLookAndFeel.cpp
-        src/gui/SwitchLookAndFeel.h
-        src/gui/SwitchLookAndFeel.cpp
+file(GLOB_RECURSE SourceFiles
+        "${CMAKE_CURRENT_SOURCE_DIR}/src/*.h"
+        "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
 )
 target_sources("${PROJECT_NAME}" PRIVATE ${SourceFiles})
 
