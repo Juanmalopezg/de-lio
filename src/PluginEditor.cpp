@@ -28,7 +28,7 @@ void AudioPluginAudioProcessorEditor::paint(juce::Graphics &g) {
             BinaryData::bg_png, BinaryData::bg_pngSize);
     addAndMakeVisible(*bg);
 
-    juce::String versionString = "1.0.0";
+    juce::String versionString = PROJECT_VERSION;
     versionLabel.setText("v " + versionString, juce::dontSendNotification);
     versionLabel.setColour(juce::Label::textColourId,juce::Colour(0xFFFFD95A));
     addAndMakeVisible(versionLabel);
