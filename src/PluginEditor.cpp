@@ -54,7 +54,7 @@ void AudioPluginAudioProcessorEditor::prepareSlider() {
     addAndMakeVisible(volumeSlider);
     volumeSlider.setLookAndFeel(&knobLookAndFeel);
     volumeAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
-            audioProcessor.state,
+            audioProcessor.valueTreeState,
             "Volume", volumeSlider);
 
     panSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
@@ -62,7 +62,7 @@ void AudioPluginAudioProcessorEditor::prepareSlider() {
     addAndMakeVisible(panSlider);
     panSlider.setLookAndFeel(&knobLookAndFeel);
     panningAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
-            audioProcessor.state,
+            audioProcessor.valueTreeState,
             "Panning", panSlider);
 }
 
@@ -72,7 +72,7 @@ void AudioPluginAudioProcessorEditor::prepareTremolo() {
 
     addAndMakeVisible(tremoloOnOffButton);
     tremoloOnOffButtonAttachment = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(
-            audioProcessor.state, "Tremolo", tremoloOnOffButton);
+            audioProcessor.valueTreeState, "Tremolo", tremoloOnOffButton);
 
 
     tremoloFreqSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
@@ -81,7 +81,7 @@ void AudioPluginAudioProcessorEditor::prepareTremolo() {
     addAndMakeVisible(tremoloFreqSlider);
     tremoloFreqSlider.setLookAndFeel(&knobLookAndFeel);
     tremoloFrequencyAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
-            audioProcessor.state, "TremoloFreq", tremoloFreqSlider);
+            audioProcessor.valueTreeState, "TremoloFreq", tremoloFreqSlider);
 }
 
 void AudioPluginAudioProcessorEditor::prepareReverb() {
@@ -89,7 +89,7 @@ void AudioPluginAudioProcessorEditor::prepareReverb() {
     reverbOnOffButton.setLookAndFeel(&switchLookAndFeel);
     addAndMakeVisible(reverbOnOffButton);
     reverbOnOffButtonAttachment = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(
-            audioProcessor.state, "Reverb", reverbOnOffButton);
+            audioProcessor.valueTreeState, "Reverb", reverbOnOffButton);
 
 
     roomSizeSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
@@ -98,7 +98,7 @@ void AudioPluginAudioProcessorEditor::prepareReverb() {
     addAndMakeVisible(roomSizeSlider);
     roomSizeSlider.setLookAndFeel(&knobLookAndFeel);
     roomSizeAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
-            audioProcessor.state, "Size", roomSizeSlider);
+            audioProcessor.valueTreeState, "Size", roomSizeSlider);
 
 
     dryWetSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
@@ -107,5 +107,5 @@ void AudioPluginAudioProcessorEditor::prepareReverb() {
     addAndMakeVisible(dryWetSlider);
     dryWetSlider.setLookAndFeel(&knobLookAndFeel);
     dryWetAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
-            audioProcessor.state, "DryWet", dryWetSlider);
+            audioProcessor.valueTreeState, "DryWet", dryWetSlider);
 }

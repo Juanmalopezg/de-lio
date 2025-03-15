@@ -14,7 +14,7 @@ public:
     //==============================================================================
     AudioPluginAudioProcessor();
 
-    ~AudioPluginAudioProcessor() override;
+    ~AudioPluginAudioProcessor() override = default;
 
     //==============================================================================
     void prepareToPlay(double sampleRate, int samplesPerBlock) override;
@@ -59,7 +59,7 @@ public:
 
     void setStateInformation(const void *data, int sizeInBytes) override;
 
-    juce::AudioProcessorValueTreeState state;
+    juce::AudioProcessorValueTreeState valueTreeState;
 
 private:
     static juce::AudioProcessorValueTreeState::ParameterLayout

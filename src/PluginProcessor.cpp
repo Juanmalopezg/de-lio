@@ -14,10 +14,8 @@ AudioPluginAudioProcessor::AudioPluginAudioProcessor()
                                              juce::AudioChannelSet::stereo(),
                                              true)
 #endif
-), state(*this, nullptr, "Parameters", createParameters()) {
+), valueTreeState(*this, nullptr, "Parameters", createParameters()) {
 }
-
-AudioPluginAudioProcessor::~AudioPluginAudioProcessor() = default;
 
 juce::AudioProcessorValueTreeState::ParameterLayout
 AudioPluginAudioProcessor::createParameters() {
@@ -49,20 +47,20 @@ AudioPluginAudioProcessor::createParameters() {
 }
 
 void AudioPluginAudioProcessor::updateParameters() {
-    float frequency = *state.getRawParameterValue("TremoloFreq");
+    float frequency = *valueTreeState.getRawParameterValue("TremoloFreq");
     tremolo.setActive(
-            static_cast<bool>(*state.getRawParameterValue("Tremolo")));
+            static_cast<bool>(*valueTreeState.getRawParameterValue("Tremolo")));
     tremolo.update(frequency);
 
-    float dryWet = *state.getRawParameterValue("DryWet");
-    float size = *state.getRawParameterValue("Size");
+    float dryWet = *valueTreeState.getRawParameterValue("DryWet");
+    float size = *valueTreeState.getRawParameterValue("Size");
 
     reverb.setActive(
-            static_cast<bool>(*state.getRawParameterValue("Reverb")));
+            static_cast<bool>(*valueTreeState.getRawParameterValue("Reverb")));
     reverb.update(dryWet, size);
 
-    float v = *state.getRawParameterValue("Volume");
-    float p = *state.getRawParameterValue("Panning");
+    float v = *valueTreeState.getRawParameterValue("Volume");
+    float p = *valueTreeState.getRawParameterValue("Panning");
     float normalizedPanning = juce::jmap(p, -10.00f, 10.00f, 0.0f,
                                         juce::MathConstants<float>::pi / 2.0f);
 
@@ -205,15 +203,21 @@ AudioPluginAudioProcessor::getStateInformation(juce::MemoryBlock &destData) {
     // You should use this method to store your parameters in the memory block.
     // You could do that either as raw data, or use the XML or ValueTree classes
     // as intermediaries to make it easy to save and load complex data.
-    juce::ignoreUnused(destData);
+    const juce::ValueTree state = this->valueTreeState.copyState();
+    std::unique_ptr<juce::XmlElement> xml(state.createXml());
+    copyXmlToBinary(*xml, destData);
 }
 
 void AudioPluginAudioProcessor::setStateInformation(const void *data,
                                                     int sizeInBytes) {
     // You should use this method to restore your parameters from this memory block,
     // whose contents will have been created by the getStateInformation() call.
-    juce::ignoreUnused(data, sizeInBytes);
-}
+    std::unique_ptr<juce::XmlElement> xmlState(getXmlFromBinary(data, sizeInBytes));
+    if (xmlState != nullptr) {
+        if (xmlState->hasTagName(this->valueTreeState.state.getType())) {
+            this->valueTreeState.replaceState(juce::ValueTree::fromXml(*xmlState));
+        }
+    }}
 
 //==============================================================================
 // This creates new instances of the plugin..
